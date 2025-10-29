@@ -24,7 +24,7 @@ export class Movement {
   @Column({ type: 'enum', enum: ['in', 'out'] })
   type: 'in' | 'out';
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   reason: string | null;
 
   @Column()
