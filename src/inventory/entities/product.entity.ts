@@ -2,18 +2,16 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Category } from './category.entity';
 
 const numericTransformer = {
   to: (value: number) => value,
-  from: (value: string | null): number => (value !== null ? parseFloat(value) : null),
+  from: (value: string | null): number => (value !== null ? Number(value) : 0),
 };
 
-@Entity('products')
+@Entity({ name: 'products' })
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -21,26 +19,14 @@ export class Product {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
-  description?: string;
-
-  @Column({ type: 'numeric', precision: 10, scale: 2, transformer: numericTransformer })
+  @Column({ type: 'numeric', default: 0, transformer: numericTransformer })
   price: number;
 
-  @Column({ type: 'int', default: 0 })
+  @Column({ default: 0 })
   stock: number;
 
-  @Column({ type: 'int', default: 0 })
+  @Column({ default: 5 })
   minStock: number;
-
-  @Column({ nullable: true })
-  barcode?: string;
-
-  @ManyToOne(() => Category, (category) => category.products, { nullable: true })
-  category?: Category;
-
-  @Column()
-  companyId: string;
 
   @Column({ default: true })
   isActive: boolean;

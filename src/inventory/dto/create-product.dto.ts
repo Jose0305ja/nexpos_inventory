@@ -1,49 +1,25 @@
 import { Type } from 'class-transformer';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  IsUUID,
-  Min,
-} from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsOptional()
-  @IsString()
-  description?: string;
-
   @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @Min(0)
   price: number;
 
-  @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(0)
+  @IsOptional()
   stock?: number;
 
-  @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(0)
+  @IsOptional()
   minStock?: number;
-
-  @IsOptional()
-  @IsString()
-  barcode?: string;
-
-  @IsOptional()
-  @IsUUID()
-  categoryId?: string;
-
-  @IsOptional()
-  @IsString()
-  companyId?: string;
 }

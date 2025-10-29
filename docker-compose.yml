@@ -1,14 +1,13 @@
+version: "3.9"
+
 services:
-  # ======================
-  # 📦 INVENTORY SERVICE
-  # ======================
-  inventory_service:
-    build: ./nexpos-inventory-service
+  inventory:
+    build: .
     container_name: inventory_service
     ports:
       - "3001:3001"
     env_file:
-      - ./nexpos-inventory-service/.env
+      - .env
     depends_on:
       db_inventory:
         condition: service_healthy
@@ -37,7 +36,6 @@ services:
 
 volumes:
   db_inventory_data:
-  db_auth_data:
 
 networks:
   nexnet:
