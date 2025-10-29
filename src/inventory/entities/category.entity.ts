@@ -1,0 +1,26 @@
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from './product.entity';
+
+@Entity('categories')
+export class Category {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  description?: string;
+
+  @Column()
+  companyId: string;
+
+  @OneToMany(() => Product, (product) => product.category)
+  products: Product[];
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+}
