@@ -1,12 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { ResponseHelper } from './shared/utils/response.helper';
+import { Public } from './shared/guards/public.decorator';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Public()
+  @Get('inventory/health')
+  health() {
+    return ResponseHelper.success('Servicio de inventario en ejecución', {
+      status: 'ok',
+    });
   }
 }
