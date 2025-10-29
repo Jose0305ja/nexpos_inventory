@@ -66,7 +66,7 @@
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.(t|j)s$": "<rootDir>/../test/ts-transformer.js"
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
