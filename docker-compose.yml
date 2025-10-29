@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  inventory:
+    build: .
+    container_name: inventory_service
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    depends_on:
+      db_inventory:
+        condition: service_healthy
+    networks:
+      - nexnet
+    restart: unless-stopped
+
+  db_inventory:
+    image: postgres:15
+    container_name: db_inventory
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bd_inventory_nexpos
+    volumes:
+      - db_inventory_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    networks:
+      - nexnet
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_inventory_data:
+
+networks:
+  nexnet:
+    driver: bridge
